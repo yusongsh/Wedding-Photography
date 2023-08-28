@@ -22,6 +22,15 @@ const query = `
 }
 `;
 
+const navItems = [
+  { href: "/", text: "Home" },
+  { href: "/portfolio", text: "Portfolio" },
+  { href: "/blog", text: "Blog" },
+  { href: "/faqs", text: "FAQs" },
+  { href: "/about", text: "About" },
+  { href: "/inquire", text: "Inquire" },
+];
+
 export default function Footer() {
   const [page, setPage] = useState(null);
 
@@ -58,7 +67,7 @@ export default function Footer() {
 
   const igPost = page.igPostCollection.items[0].photosCollection.items;
 
-  console.log("can you see", page, igPost);
+  // console.log("can you see", page, igPost);
 
   return (
     <footer>
@@ -97,29 +106,16 @@ export default function Footer() {
         <div className="flex flex-col md:items-end md:flex-row justify-between text-light gap-10">
           <div className="pb-6 md:pb-0">
             <div className="uppercase font-semibold text-lg md:text-base flex flex-col lg:flex-row gap-2 md:gap-1">
-              <Link href="/" className="">
-                Home
-              </Link>
-              <span className="hidden lg:block">-</span>
-              <Link href="/portfolio" className="">
-                Portfolio
-              </Link>
-              <span className="hidden lg:block">-</span>
-              <Link href="/blog" className="">
-                Blog
-              </Link>
-              <span className="hidden lg:block">-</span>
-              <Link href="/faqs" className="">
-                FAQs
-              </Link>
-              <span className="hidden lg:block">-</span>
-              <Link href="/about" className="">
-                About
-              </Link>
-              <span className="hidden lg:block">-</span>
-              <Link href="/inquire" className="">
-                Inquire
-              </Link>
+              {navItems.map((item, index) => (
+                <React.Fragment key={index}>
+                  <Link href={item.href} className="">
+                    {item.text}
+                  </Link>
+                  {index !== navItems.length - 1 && (
+                    <span className="hidden lg:block">-</span>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
             <div className="text-xs pt-2">
               <a>Brand Credit</a>

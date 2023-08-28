@@ -6,6 +6,12 @@ import { motion, useAnimation } from "framer-motion";
 import Logo from "../images/YusongShiWeddingLogo.png";
 import Image from "next/image";
 
+const links = [
+  { href: "/", text: "Home" },
+  { href: "/about", text: "About" },
+  { href: "/contact", text: "Contact" },
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -103,27 +109,18 @@ const Navbar = () => {
       </nav>
       {isOpen && (
         <div className="fixed inset-0 bg-black flex flex-col items-center justify-center text-center text-light pt-16 z-30">
-          <Link
-            href="/"
-            className="block py-1 text-5xl uppercase font-semibold"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/about"
-            className="block mt-6 py-1 text-5xl uppercase font-semibold"
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </Link>
-          <Link
-            href="/contact"
-            className="block mt-6 py-1 text-5xl uppercase font-semibold"
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </Link>
+          {links.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className={`block ${
+                index !== 0 ? "mt-6" : ""
+              } py-1 text-5xl uppercase font-semibold`}
+              onClick={() => setIsOpen(false)}
+            >
+              {link.text}
+            </Link>
+          ))}
           <div className="fixed bottom-0 left-0 right-0 flex items-center justify-center pb-4">
             <a
               href="https://www.twitter.com"

@@ -25,8 +25,8 @@ const WhatIdo = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center mx-auto mb-16 gap-10">
-        <div className="grid grid-cols-1">
-          <div className="w-full h-auto aspect-[3/2]">
+        <div className="grid grid-cols-1 pb-40">
+          <div className="w-full h-auto lg:aspect-[3/2]">
             <Image
               src={feature}
               alt="background image of the section"
@@ -34,8 +34,8 @@ const WhatIdo = () => {
             />
           </div>
         </div>
-        <HiArrowLongDown className="text-light text-3xl mt-8" />
-        <div className="flex container mx-auto justify-center text-light text-2xl lg:text-3xl font-bold px-10 lg:px-0">
+        <div className="scroll-down"></div>
+        <div className="flex container mx-auto justify-center text-light text-2xl lg:text-3xl font-bold px-10 lg:px-0 pt-16">
           <h3 className="text-center max-w-3xl leading-9 tracking-tight">
             As a wedding, portrait, and engagement photographer, I specialize in
             providing a range of creative services tailored to elevate your

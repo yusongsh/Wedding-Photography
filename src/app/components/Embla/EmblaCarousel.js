@@ -10,8 +10,6 @@ const EmblaCarousel = () => {
     containScroll: "trimSnaps",
     loop: true,
   };
-  const SLIDE_COUNT = 5;
-  const slides = Array.from(Array(SLIDE_COUNT).keys());
 
   const [emblaRef] = useEmblaCarousel(options);
 
@@ -68,16 +66,16 @@ const EmblaCarousel = () => {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex text-light">
           {data.websiteServiceCollection.items.map((item, index) => (
-            <div key={index} className="relative px-4">
+            <div key={index} className="relative px-2 lg:px-3 2xl:px-4">
               <img
                 src={item.image.url}
                 alt="image of service"
-                className="h-[20rem] lg:h-[30rem] w-full object-cover aspect-square"
+                className="h-[20rem] lg:h-[30rem] 2xl:h-[40rem] w-full object-cover aspect-square"
               />
               <h3 className="text-2xl italic font-semibold pt-4 pb-3 uppercase">
                 {item.title}
               </h3>
-              <div className="text-sm font-light w-[20rem] lg:w-[30rem]">
+              <div className="text-sm font-light w-[20rem] lg:w-[30rem] 2xl:w-[40rem] pr-4">
                 {item.service}
               </div>
             </div>

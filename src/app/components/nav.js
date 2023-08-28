@@ -51,10 +51,13 @@ const Navbar = () => {
   }, [visible, controls]);
 
   return (
-    <motion.div animate={controls} className="px-8 py-4">
+    <motion.div
+      animate={controls}
+      className="px-8 py-4 lg:px-16 lg:py-8 2xl:px-24 2xl:py-12"
+    >
       <nav className="sticky top-0 w-full text-white z-50 bg-transparent">
         <div className="flex items-center justify-between">
-          <div className="w-36 h-auto aspect-[4/1] relative">
+          <div className="w-36 2xl:w-40 h-auto aspect-[4/1] relative">
             <Link href="/" className="text-2xl font-bold">
               <Image
                 src={Logo}
@@ -102,8 +105,8 @@ const Navbar = () => {
               key={index}
               href={link.href}
               className={`block ${
-                index !== 0 ? "mt-6" : ""
-              } py-1 text-5xl uppercase font-semibold`}
+                index !== 0 ? "mt-4 lg:mt-6" : ""
+              } lg:py-1 text-2xl lg:text-5xl uppercase font-semibold`}
               onClick={() => setIsOpen(false)}
             >
               {link.text}

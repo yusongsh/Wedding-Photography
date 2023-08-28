@@ -62,7 +62,7 @@ const EmblaCarousel = () => {
   // console.log(data);
 
   return (
-    <div className="w-auto md:w-full py-10">
+    <div className="w-auto md:w-full py-16">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex text-light">
           {data.websiteServiceCollection.items.map((item, index) => (

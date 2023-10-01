@@ -6,12 +6,13 @@ import inqueryImg from "./images/Stanley&Rachel-Yusong-Shi-Wedding.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import feature from "./images/LatestStory/Yusong-Wedding---Featured-1.jpg";
-import { HiArrowLongDown } from "react-icons/hi2";
+import EmblaFull from "./components/Embla/EmblaFull";
 
 export default function page() {
   return (
     <>
       <Navbar />
+      <EmblaFull />
       <WhatIdo />
       <EmblaCarousel />
       <Problem />
@@ -25,15 +26,6 @@ const WhatIdo = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center mx-auto mb-16 gap-10">
-        <div className="grid grid-cols-1 pb-40">
-          <div className="w-full h-auto lg:aspect-[3/2]">
-            <Image
-              src={feature}
-              alt="background image of the section"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-        </div>
         <div className="scroll-down"></div>
         <div className="flex container mx-auto justify-center text-light text-2xl lg:text-3xl font-bold px-10 lg:px-0 pt-16">
           <h3 className="text-center max-w-3xl leading-9 tracking-tight">

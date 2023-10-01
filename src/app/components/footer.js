@@ -26,9 +26,9 @@ const navItems = [
   { href: "/", text: "Home" },
   { href: "/portfolio", text: "Portfolio" },
   { href: "/blog", text: "Blog" },
-  { href: "/faqs", text: "FAQs" },
+  { href: "/faq", text: "FAQs" },
   { href: "/about", text: "About" },
-  { href: "/inquire", text: "Inquire" },
+  { href: "/investment", text: "Inquire" },
 ];
 
 export default function Footer() {

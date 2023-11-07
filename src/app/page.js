@@ -50,7 +50,7 @@ const Problem = () => {
   return (
     <>
       <div className="relative lg:my-16">
-        <div className="w-screen h-auto aspect-[4/3] max-h-[1000px]">
+        <div className="w-screen h-auto aspect-[3/2] max-h-[800px]">
           <Image
             src={problemImg}
             alt="background image of the section"

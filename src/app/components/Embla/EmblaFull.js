@@ -45,7 +45,7 @@ const EmblaFull = () => {
   };
 
   return (
-    <div className="pb-24" ref={emblaRef}>
+    <div className="pb-24 overflow-hidden" ref={emblaRef}>
       <div className="flex flex-row">
         <div className="bg-yellow-300 w-screen h-[40rem] flex-none">
           Slide 1

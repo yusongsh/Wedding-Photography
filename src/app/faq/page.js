@@ -1,136 +1,280 @@
 "use client";
 import Navbar from "../components/nav";
 import Footer from "../components/footer";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { HiMagnifyingGlass, HiChevronDown, HiPlus } from "react-icons/hi2";
 
-const faqQuestion = [
+const categories = [
+  { id: "all", label: "All Questions" },
+  { id: "wedding", label: "Wedding" },
+  { id: "portrait", label: "Portrait" },
+  { id: "engagement", label: "Engagement" },
+  { id: "general", label: "General Information" },
+  { id: "booking", label: "Booking & Pricing" },
+];
+
+const faqItems = [
   {
-    question: "1. Do you have experience with various wedding traditions?",
+    question: "What is your photography style?",
     answer:
-      "Absolutely! Over the years, I've had the joy of capturing weddings from diverse cultures and traditions. From vibrant Indian ceremonies to intimate Japanese tea ceremonies, each wedding has enriched my understanding and appreciation for love celebrated across cultures.",
+      "I specialize in a blend of documentary and editorial photography. This approach allows me to capture candid moments authentically while also providing guided portraits that reflect your unique personalities.",
+    category: "general",
   },
   {
-    question: "2. Do you offer engagement or pre-wedding shoots?",
+    question: "How long have you been photographing weddings?",
     answer:
-      "Yes, and I adore them! Engagement sessions are a fantastic way to get to know each other before the big day. They capture the sweet anticipation and provide you with memories of this unique chapter in your love story.",
+      "I have been photographing weddings since 2015 and I was a professional sports photographer before that for Division I sports for 4 years.",
+    category: "wedding",
   },
   {
-    question: "3. How many photos will we receive?",
+    question: "What do your wedding photography packages include?",
     answer:
-      "Quality always takes precedence over quantity for me. Typically, for a full-day wedding, you'll receive between 400-600 images. Each one is carefully edited to ensure they reflect the emotions and moments of your special day.",
+      "All packages include high-resolution, professionally edited digital files delivered on a custom flash drive. Additional services such as engagement sessions, additional photographers, heirloom wedding albums, and prints are also available.",
+    category: "wedding",
   },
   {
-    question: "4. What equipment do you use?",
+    question: "Do you offer retouching and color adjustment services?",
     answer:
-      "I trust only the best for my couples. I use top-tier professional cameras and lenses. Over the years, I've carefully curated my equipment to include gear that ensures crisp, vibrant, and timeless photos.",
+      "Yes, every image in your collection is color-balanced, exposure-adjusted, cropped, and straightened as needed. Portraits receive minor blemish removal if necessary.",
+    category: "general",
   },
   {
-    question: "5. Do you provide black and white photos?",
+    question: "Do you have experience shooting in various lighting situations?",
     answer:
-      "I do! There's a timeless elegance to black and white photos. Some moments, especially the emotional ones, often feel even more profound without the distraction of color.",
+      "Yes, I am comfortable working in all types of lighting conditions, utilizing both available light and professional lighting equipment as needed.",
+    category: "general",
   },
   {
-    question: "6. How soon after the wedding will we receive our photos?",
+    question: "Do you shoot digital or film?",
     answer:
-      "Crafting your images post-wedding is an art in itself. While I'm as eager as you are to share the photos, I take about 4-6 weeks to ensure every image embodies the magic of your day.",
+      "I primarily work with digital photography but often supplement with film, using a variety of vintage cameras to capture unique moments.",
+    category: "general",
   },
   {
-    question: "7. Can we get a photo album or photo book?",
+    question: "Do you work with a second photographer?",
     answer:
-      "Certainly! I partner with some of the finest craftsmen to create bespoke photo albums that are as unique as your love story. It's a tangible memory that you'll cherish for a lifetime.",
+      "Most of the time, I work solo. However, for larger weddings or events requiring coverage of multiple locations, I can arrange for a second experienced photographer.",
+    category: "wedding",
   },
   {
-    question: "8. Do you have backup equipment?",
+    question: "Are you insured?",
     answer:
-      "Always. I believe in being prepared for every scenario. Carrying backup equipment is a standard practice for me to ensure nothing stands in the way of capturing your day.",
+      "Yes, I carry comprehensive liability insurance, and I can provide a certificate of insurance to your venue upon request.",
+    category: "general",
   },
   {
-    question: "9. Do you also do videography?",
+    question: "Do you bring backup equipment?",
     answer:
-      "While photography is my primary passion, I have collaborated with some incredible videographers over the years. I'd be happy to recommend or arrange a combined package for you.",
+      "Absolutely. I always carry backup cameras, lenses, and lighting equipment to ensure seamless coverage in case of any equipment malfunction.",
+    category: "general",
   },
   {
-    question: "10. How do you handle low-light situations?",
+    question: "How many photos will we receive?",
     answer:
-      "Over time, I've honed my skills in capturing moments even in challenging lighting. Armed with professional-grade low-light lenses and the knowledge of how to wield them, I promise your moments will be captured in their best light.",
+      "The number of images varies based on the specifics of your wedding, but for a 10-hour coverage, you can expect approximately 300 images.",
+    category: "wedding",
   },
   {
-    question: "11. Do you travel for destination weddings?",
+    question: "Will we receive the raw, unedited files?",
     answer:
-      "Absolutely, I have a deep love for travel. Capturing love stories against unique backdrops and in different cultures is something I cherish. While there are travel and accommodation charges, the memories we'll create together will be priceless.",
+      "No, I do not provide raw files. All delivered images are professionally edited to ensure the highest quality.",
+    category: "general",
   },
   {
-    question: "12. How do we secure our date with you?",
+    question: "How long after the wedding will we receive our photos?",
     answer:
-      "To ensure I give my all to every couple, I book a limited number of weddings each year. A signed contract and a deposit will secure your date. I operate on a first-come, first-served basis, so I recommend booking early!",
+      "A sneak peek is typically provided within a few days or even within 24hrs, with the full gallery delivered approximately six weeks after the wedding.",
+    category: "wedding",
   },
   {
-    question: "13. What is your cancellation policy?",
+    question: "Do you offer albums or prints?",
     answer:
-      "I understand life can be unpredictable. While deposits are non-refundable, I always strive to accommodate date changes based on my availability.",
+      "Yes, I offer a range of heirloom-quality albums, prints, and other tangible products to showcase your wedding photos beautifully.",
+    category: "wedding",
   },
   {
-    question: "14. Do you offer packages for elopements or smaller weddings?",
+    question: "Do you travel for weddings?",
     answer:
-      "Every love story is unique. Elopements and intimate weddings have a charm of their own, and I offer custom packages tailored for such beautiful, personal celebrations.",
+      "Yes, I am available for destination weddings and love photographing in new locations. Travel fees may apply depending on the distance and logistics.",
+    category: "wedding",
   },
   {
-    question: "15. How do you work with other vendors on the day?",
+    question: "How far in advance should we book?",
     answer:
-      "Collaboration is key. Over the years, I've built relationships with many vendors. We work hand-in-hand, ensuring your day is seamless and every moment is captured harmoniously.",
+      "It's advisable to book as early as possible. A signed contract and retainer are required to reserve your date.",
+    category: "booking",
   },
   {
-    question: "16. Do you have insurance?",
+    question: "What is your payment schedule?",
     answer:
-      "Yes, ensuring safety and professionalism is paramount to me. I'm fully insured, which not only protects my gear but also provides peace of mind to the venues and couples I work with.",
+      "A booking fee or retainer is required to secure your date, with the remaining balance typically divided into two payments: one due ninety days before the wedding and the final installment four weeks prior.",
+    category: "booking",
   },
   {
-    question: "17. Can we provide a list of specific shots we want?",
+    question: "Can we meet before booking?",
     answer:
-      "Of course! Your input is invaluable. While I approach the day with a photojournalistic style, capturing moments as they naturally unfold, I always welcome any specific shots or ideas you have in mind.",
+      "Yes, I encourage meeting in person or via video call to discuss your wedding plans and ensure we're a good fit for each other.",
+    category: "booking",
+  },
+  {
+    question: "Do you offer engagement sessions?",
+    answer:
+      "Yes, engagement sessions are available and can be included in your wedding photography package or booked separately.",
+    category: "engagement",
+  },
+  {
+    question: "Do you provide a written contract?",
+    answer:
+      "Yes, a detailed contract outlining all services, deliverables, and terms is provided to ensure clarity and mutual agreement.",
+    category: "general",
+  },
+  {
+    question: "How do we book you for our wedding?",
+    answer:
+      "To book, please contact me to confirm availability. A signed contract and retainer are required to secure your wedding date.",
+    category: "booking",
   },
 ];
 
-export default function Page() {
+export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const filteredFaqs = useMemo(() => {
+    return faqItems.filter((item) => {
+      const matchesSearch =
+        item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.answer.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "all" || item.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
+
+  const toggleAccordion = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   return (
     <>
       <Navbar />
-      <div className="text-light flex flex-col px-8 py-4 lg:px-16 lg:py-8 2xl:px-24 2xl:py-12">
-        <h1 className="pr-12 pb-12 text-2xl lg:text-3xl italic font-semibold">
-          FAQs
-        </h1>
-        {/* <div className="grid grid-cols-2">
-          {faqQuestion.map((item, index) => (
-            <div key={index} className="mb-6">
+      <main className="min-h-screen text-light py-16">
+        <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-12">
+            Frequently Asked Questions
+          </h1>
+
+          <div className="flex flex-col md:flex-row gap-4 mb-12">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <HiMagnifyingGlass className="absolute left-4 top-1/2 transform -translate-y-1/2 text-light/90 z-10" />
+              <input
+                type="text"
+                placeholder="Have a question? Type your keywords here..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-dark/30 hover:bg-dark/40 focus:bg-dark/40 backdrop-blur-md rounded-lg pl-12 pr-4 py-4 text-light placeholder:text-light/50 focus:outline-none border border-light/10 focus:ring-2 focus:ring-light/30 transition-all duration-200"
+              />
+            </div>
+
+            {/* Category Dropdown */}
+            <div className="relative">
               <button
-                onClick={() =>
-                  setActiveIndex(index === activeIndex ? null : index)
-                }
-                className="text-sm italic font-semibold"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-full md:w-56 bg-dark/30 hover:bg-dark/40 backdrop-blur-md rounded-lg px-4 py-4 text-light flex items-center justify-between transition-all duration-200 border border-light/10"
               >
-                {item.question}
+                {categories.find((cat) => cat.id === selectedCategory)?.label}
+                <HiChevronDown
+                  size={20}
+                  className={`transform transition-transform duration-300 ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
-              {index === activeIndex && (
-                <div className="mt-1 text-sm font-light">{item.answer}</div>
-              )}
+
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-50 w-full mt-2 bg-dark/95 backdrop-blur-md rounded-lg overflow-hidden shadow-lg border border-light/10"
+                  >
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => {
+                          setSelectedCategory(category.id);
+                          setIsDropdownOpen(false);
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-light/10 transition-colors"
+                      >
+                        {category.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          ))}
-        </div> */}
-        <div className="columns-1 lg:gap-y-0 lg:columns-2 2xl:columns-3 gap-16">
-          {faqQuestion.map((item, index) => (
-            <div key={index} className="mb-16 lg:mb-8 ">
-              <div className="break-inside-avoid">
-                <h4 className="text-sm italic font-semibold text-left">
-                  {item.question}
-                </h4>
-                <p className="mt-1 text-sm font-light">{item.answer}</p>
-              </div>
-            </div>
-          ))}
+          </div>
+
+          <div className="space-y-4">
+            <AnimatePresence>
+              {filteredFaqs.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{
+                    opacity:
+                      activeIndex === null || activeIndex === index ? 1 : 0.5,
+                    y: 0,
+                  }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="border-b border-light/10 last:border-b-0 transition-opacity duration-200"
+                >
+                  <button
+                    className="w-full text-left py-4 flex justify-between items-center gap-4"
+                    onClick={() => toggleAccordion(index)}
+                  >
+                    <h3
+                      className={`text-lg lg:text-xl ${
+                        activeIndex === index
+                          ? "font-medium text-light"
+                          : "font-normal text-light/90"
+                      } transition-all duration-200`}
+                    >
+                      {item.question}
+                    </h3>
+                    <HiPlus
+                      size={20}
+                      className={`flex-shrink-0 transition-transform duration-300 ${
+                        activeIndex === index ? "rotate-45" : ""
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {activeIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, type: "spring" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-light/80 pb-4">{item.answer}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

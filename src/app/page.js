@@ -1,3 +1,4 @@
+"use client";
 import Navbar from "./components/nav";
 import Footer from "./components/footer";
 import EmblaCarousel from "./components/Embla/EmblaCarousel";
@@ -16,7 +17,6 @@ export default function page() {
       <WhatIdo />
       <EmblaCarousel />
       <Problem />
-      <Inquery />
       <Footer />
     </>
   );
@@ -25,23 +25,22 @@ export default function page() {
 const WhatIdo = () => {
   return (
     <>
-      <div className="flex flex-col justify-center items-center mx-auto mb-16 gap-10">
+      <section className="flex flex-col justify-center items-center mx-auto mb-16 gap-10">
         <div className="scroll-down"></div>
-        <div className="flex container mx-auto justify-center text-light text-2xl lg:text-3xl font-bold px-10 lg:px-0 pt-16">
-          <h3 className="text-center max-w-3xl leading-9 tracking-tight">
+        <div className="flex container mx-auto justify-center text-light px-6 lg:px-0 pt-16">
+          <h1 className="text-2xl lg:text-[2.5rem] font-medium text-center max-w-3xl leading-[1.2] tracking-[-0.02em]">
             As a wedding, portrait, and engagement photographer, I specialize in
-            providing a range of creative services tailored to elevate your
-            needs and maximize your return on investment.
-          </h3>
+            providing a range of creative services.
+          </h1>
         </div>
         <div className="">
           <Link href="/investment">
-            <button className="text-sm lg:text-base font-semibold uppercase px-[calc(100vw/4)] py-3 lg:px-10 lg:py-4 bg-light rounded-full text-dark whitespace-nowrap">
+            <button className="text-[0.875rem] lg:text-[0.9375rem] font-medium uppercase px-[calc(100vw/4)] py-3 lg:px-10 lg:py-4 bg-light rounded-full text-dark whitespace-nowrap hover:bg-light/90 transition-all">
               investment
             </button>
           </Link>
         </div>
-      </div>
+      </section>
     </>
   );
 };
@@ -49,7 +48,7 @@ const WhatIdo = () => {
 const Problem = () => {
   return (
     <>
-      <div className="relative lg:my-16">
+      <section className="relative lg:my-16" aria-label="featured-content">
         <div className="w-screen h-auto aspect-[3/2] max-h-[800px]">
           <Image
             src={problemImg}
@@ -57,43 +56,20 @@ const Problem = () => {
             fill={true}
             style={{ objectFit: "cover" }}
           />
-        </div>
-        <div className="absolute inset-0 bg-dark opacity-40 transition-opacity duration-300"></div>
-        <h4 className="absolute inset-0 flex items-center justify-center text-center px-4 text-light text-base lg:text-2xl font-bold italic">
-          i&apos;ve got 99 problems but a perfect shot ain&apos;t one.
-        </h4>
-      </div>
-    </>
-  );
-};
+          <div className="absolute inset-0 bg-dark opacity-40 transition-opacity duration-300"></div>
 
-const Inquery = () => {
-  return (
-    <>
-      <div className="py-16 w-full max-w-[1440px] flex mx-auto container">
-        <div className="flex flex-col-reverse lg:flex-row justify-center items-center mx-auto gap-20 lg:gap-10 px-[6vw] lg:px-[2vw] container">
-          <div className="w-full lg:w-1/2 h-auto container">
-            <Image
-              src={inqueryImg}
-              alt="background image of the section"
-              style={{ objectFit: "cover", position: "relative" }}
-              className="rounded-tl-[500px] rounded-tr-[500px] max-h-[700px] container"
-            />
-          </div>
-          <div className="flex flex-col justify-center items-center">
-            <div className="flex flex-col text-light justify-between gap-10 lg:gap-20 px-12">
-              <div className="">
-                <h4 className="text-2xl lg:text-3xl uppercase font-semibold italic my-4">
+          {/* Top Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+            <div className="bg-light/10 backdrop-blur-[6px] rounded-[2rem] p-12 lg:p-16 w-[95%] max-w-3xl mx-auto border border-light/20 shadow-2xl">
+              <div className="text-center">
+                <h2 className="text-xl lg:text-[2rem] uppercase font-medium mb-6 text-light tracking-[-0.02em] leading-[1.2]">
                   Let&apos;s RAISE A toast
-                </h4>
-                <p className="max-w-1/2 text-sm lg:text-base font-light">
-                  a photographs of your perfectly imperfect recollections — the
-                  ones worthy of hanging onto.
+                </h2>
+                <p className="text-base lg:text-xl font-light text-light/95 max-w-2xl mx-auto mb-10 leading-[1.5]">
+                  I&apos;ve got 99 problems but a perfect shot ain&apos;t one.
                 </p>
-              </div>
-              <div className="">
                 <Link href="/contact">
-                  <button className="text-sm lg:text-base font-semibold uppercase px-[calc(100vw/4)] py-3 lg:px-10 lg:py-4 bg-light rounded-full text-dark whitespace-nowrap">
+                  <button className="text-[0.875rem] lg:text-[0.9375rem] font-medium uppercase px-16 py-4 bg-light/95 backdrop-blur-[2px] rounded-full text-dark whitespace-nowrap hover:bg-light transition-all shadow-lg">
                     INQUIRE NOW
                   </button>
                 </Link>
@@ -101,7 +77,7 @@ const Inquery = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

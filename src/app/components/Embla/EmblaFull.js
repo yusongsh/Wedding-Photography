@@ -1,69 +1,69 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { HiArrowLongRight, HiArrowLongLeft } from "react-icons/hi2";
+import Image from "next/image";
+import Image1 from "../../images/LatestStory/Yusong-Wedding---Featured-1.jpg";
+import Image2 from "../../images/LatestStory/Yusong-Wedding---Featured-2.jpg";
+import Image3 from "../../images/LatestStory/Yusong-Wedding---Featured-3.jpg";
+import Image4 from "../../images/LatestStory/Yusong-Wedding---Featured-4.jpg";
+
+const images = [Image1, Image2, Image3, Image4];
 
 const EmblaFull = () => {
   const options = {
-    slidesToScroll: "auto",
-    containScroll: "trimSnaps",
+    slidesToScroll: 1,
     loop: true,
+    containScroll: false,
+    dragFree: false,
   };
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const autoplayInterval = 3000; // 3 seconds
 
   useEffect(() => {
     if (!emblaApi) return;
 
-    const play = () => {
-      setIsPlaying(true);
-      emblaApi.scrollTo(emblaApi.selectedScrollSnap() + 1);
-    };
+    const autoplay = setInterval(() => {
+      if (emblaApi.canScrollNext()) {
+        emblaApi.scrollNext();
+      } else {
+        emblaApi.scrollTo(0);
+      }
+    }, 5000); // 4 seconds per slide
 
-    if (isPlaying) {
-      const timer = setInterval(play, autoplayInterval);
-      return () => clearInterval(timer);
-    }
-
-    return () => {};
-  }, [emblaApi, isPlaying]);
-
-  const toggleAutoplay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const slideNext = () => {
-    if (!emblaApi) return;
-    emblaApi.scrollNext();
-  };
-
-  const slidePrev = () => {
-    if (!emblaApi) return;
-    emblaApi.scrollPrev();
-  };
+    return () => clearInterval(autoplay);
+  }, [emblaApi]);
 
   return (
-    <div className="pb-24 overflow-hidden" ref={emblaRef}>
-      <div className="flex flex-row">
-        <div className="bg-yellow-300 w-screen h-[40rem] flex-none">
-          Slide 1
+    <div className="relative w-full max-w-[1920px] mx-auto overflow-hidden mb-12">
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className="relative flex-none w-full"
+              style={{ flex: "0 0 100%" }}
+            >
+              <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh]">
+                <Image
+                  src={image}
+                  alt={`Featured image ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  className="object-cover"
+                  sizes="(max-width: 1920px) 100vw, 1920px"
+                />
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="bg-red-300 w-screen h-[40rem] flex-none">Slide 2</div>
-        <div className="bg-blue-300 w-screen h-[40rem] flex-none">Slide 3</div>
       </div>
-      <div className="flex flex-row justify-center items-center mx-auto text-light text-2xl gap-4 my-4">
-        <button onClick={slidePrev}>
-          <HiArrowLongLeft />
-        </button>
-        <button onClick={slideNext}>
-          <HiArrowLongRight />
-        </button>
-      </div>
-      {/* <button onClick={toggleAutoplay}>
-        {isPlaying ? "Pause" : "Autoplay"}
-      </button> */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent 85%, rgba(0,0,0,0.3))",
+        }}
+      />
     </div>
   );
 };

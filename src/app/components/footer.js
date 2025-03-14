@@ -22,13 +22,12 @@ const query = `
 }
 `;
 
-const navItems = [
+const links = [
   { href: "/", text: "Home" },
-  { href: "/portfolio", text: "Portfolio" },
-  { href: "/blog", text: "Blog" },
-  { href: "/faq", text: "FAQs" },
   { href: "/about", text: "About" },
-  { href: "/investment", text: "Inquire" },
+  { href: "/contact", text: "Contact" },
+  { href: "/information", text: "Information" },
+  { href: "/information", text: "Inquire" },
 ];
 
 export default function Footer() {
@@ -106,12 +105,12 @@ export default function Footer() {
         <div className="flex flex-col md:items-end md:flex-row justify-between text-light gap-10">
           <div className="pb-6 md:pb-0">
             <div className="uppercase font-semibold text-lg md:text-base flex flex-col lg:flex-row gap-2 md:gap-1">
-              {navItems.map((item, index) => (
+              {links.map((item, index) => (
                 <React.Fragment key={index}>
                   <Link href={item.href} className="">
                     {item.text}
                   </Link>
-                  {index !== navItems.length - 1 && (
+                  {index !== links.length - 1 && (
                     <span className="hidden lg:block">-</span>
                   )}
                 </React.Fragment>

@@ -10,7 +10,7 @@ const links = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
   { href: "/contact", text: "Contact" },
-  { href: "/faq", text: "FAQs" },
+  { href: "/information", text: "Information" },
 ];
 
 const Navbar = () => {

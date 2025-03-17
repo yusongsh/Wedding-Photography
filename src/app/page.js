@@ -19,9 +19,8 @@ export default function Home() {
         >
           {/* Logo or Name */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-light tracking-[-0.02em] leading-[1.2]">
-            Yusong Shi
             <span className="block text-xl md:text-2xl lg:text-3xl mt-2 text-light/80">
-              Photography
+              Yusong Shi Photography
             </span>
           </h1>
 
